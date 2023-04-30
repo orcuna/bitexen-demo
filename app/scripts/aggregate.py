@@ -220,9 +220,8 @@ class MonthlyStatsTask(luigi.Task, StatsMixin):
 if __name__ == '__main__':
     django.setup()
     from tickers.models import Trade, StatsAggregationTypes, StatsAggregation
-    while 1:
-        luigi_flag = random.randrange(1000000000000000)
-        luigi.build(
+    luigi_flag = random.randrange(1000000000000000)
+    luigi.build(
             [
                 DailyStatsTask(
                     full_name='btc/tl::bitexen', luigi_flag=luigi_flag),
@@ -233,5 +232,4 @@ if __name__ == '__main__':
             ],
             workers=1,
             local_scheduler=True
-        )
-        time.sleep(5)
+    )
