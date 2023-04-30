@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+      <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <title>Bitexen Demo</title>
+      </head>
+      <body class="d-flex flex-column h-100">
+      <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Bitexen Demo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="flex-shrink-0 mt-5">
+      <div class="container">
+        <h1 class="mt-5">Stats for btc/tl::bitexen</h1>
+        <p class="lead">Code for this demo lives at <a href="https://github.com/orcuna/bitexen-demo">https://github.com/orcuna/bitexen-demo</a>.</p>
+        <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Daily</th>
+          <th scope="col">Weekly</th>
+          <th scope="col">Monthly</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Low</th>
+          <td ><span id="1-low"></span> TL</td>
+          <td ><span id="2-low"></span> TL</td>
+          <td ><span id="3-low"></span> TL</td>
+        </tr>
+        <tr>
+          <th scope="row">High</th>
+          <td ><span id="1-high"></span> TL</td>
+          <td ><span id="2-high"></span> TL</td>
+          <td ><span id="3-high"></span> TL</td>
+        </tr>
+        <tr>
+          <th scope="row">Average</th>
+          <td ><span id="1-average"></span> TL</td>
+          <td ><span id="2-average"></span> TL</td>
+          <td ><span id="3-average"></span> TL</td>
+        </tr>
+        <tr>
+          <th scope="row">Volume</th>
+          <td ><span id="1-volume"></span> BTC</td>
+          <td ><span id="2-volume"></span> BTC</td>
+          <td ><span id="3-volume"></span> BTC</td>
+        </tr>
+      </tbody>
+    </table>
+        <p class="mt-4">Stats are updated every 10 seconds. This page will fetch updated stats from the API automatically.</p>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+      <script type="text/javascript">
+        function fetch () {
+          $.getJSON( "/api/stats/", function( data ) {
+              $.each(data.objects, function(index, value) {
+                  var type = value.type;
+                  var low = parseFloat(value.low).toFixed(2);
+                  var high = parseFloat(value.high).toFixed(2);
+                  var average = parseFloat(value.average).toFixed(2);
+                  var volume = parseFloat(value.volume).toFixed(2);
+                  $('#'+type+'-low').html(low);
+                  $('#'+type+'-high').html(high);
+                  $('#'+type+'-average').html(average);
+                  $('#'+type+'-volume').html(volume);
+              });
+          });
+        }
+
+        $(document).ready(function () {
+           fetch();
+           setInterval(fetch, 10000);
+        });
+      </script>
+  </body>
+</html>

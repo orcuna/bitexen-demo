@@ -1,0 +1,79 @@
+version: '3'
+
+services:
+  web:
+    image: orcuna/bitexen-demo:latest
+    command: python3 manage.py runserver 0.0.0.0:80
+    volumes:
+      - ./app/:/app/
+    ports:
+      - 80:80
+    environment:
+      - DEBUG=0
+      - ENV=prod
+      - HOST=bitexen-demo.sk2tr.com
+      - DJANGO_SETTINGS_MODULE=bitexen_demo.settings
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=demo
+      - SQL_USER=demo
+      - SQL_PASSWORD=ttdd331asdbzz
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+    networks:
+      - demo-overlay
+  listen_bitexen:
+    image: orcuna/bitexen-demo:latest
+    command: python3 scripts/listen_bitexen.py
+    volumes:
+      - ./app/:/app/
+    environment:
+      - DEBUG=0
+      - ENV=prod
+      - HOST=bitexen-demo.sk2tr.com
+      - DJANGO_SETTINGS_MODULE=bitexen_demo.settings
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=demo
+      - SQL_USER=demo
+      - SQL_PASSWORD=ttdd331asdbzz
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+    networks:
+      - demo-overlay
+  aggregate:
+    image: orcuna/bitexen-demo:latest
+    command: python3 scripts/aggregate.py
+    volumes:
+      - ./app/:/app/
+    environment:
+      - DEBUG=0
+      - ENV=prod
+      - HOST=bitexen-demo.sk2tr.com
+      - DJANGO_SETTINGS_MODULE=bitexen_demo.settings
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=demo
+      - SQL_USER=demo
+      - SQL_PASSWORD=ttdd331asdbzz
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+    networks:
+      - demo-overlay
+  db:
+    image: timescale/timescaledb:latest-pg14
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=ttdd331asdbzz
+      - POSTGRES_DB=demo
+    networks:
+      - demo-overlay
+
+volumes:
+  postgres_data:
+
+networks:
+  demo-overlay:
+    driver: overlay

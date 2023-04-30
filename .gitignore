@@ -1,0 +1,29 @@
+# ignore editor files
+.expo
+.idea
+.DS_Store
+__pycache__/
+.ipynb_checkpoints
+
+# ignore Django database (if exists)
+app/db.sqlite3
+
+# ignore all log files except README
+logs/*
+!logs/README.md
+
+# ignore node_modules file
+app/node_modules
+
+# ignore compiled files
+*.pyc
+
+# ignore all media files except README
+app/media/
+
+# ignore backups
+backups/
+
+# ignore all s3 files except README
+s3/*
+!s3/README.md

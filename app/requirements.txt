@@ -1,0 +1,8 @@
+django==4.2
+psycopg2-binary
+django-timescaledb
+django-tastypie
+luigi
+requests
+pandas
+pytz
