@@ -9,7 +9,7 @@ A live demo for this project can be found at:
 2. Make sure Docker swarm is initialized, re-run `docker swarm init`
 2. Pull required images with `docker pull orcuna/bitexen-demo:latest`, `docker pull timescale/timescaledb:latest-pg14`
 3. Checkout project code and `cd` into root path.
-4. Deploy stack in development mode with `docker stack deploy -c docker-compose.dev.yml`
+4. Deploy stack in development mode with `docker stack deploy -c docker-compose.dev.yml bitexen-demo`
 5. Go to http://localhost and you should see live data of the stats :)
 
 ## Design choices
